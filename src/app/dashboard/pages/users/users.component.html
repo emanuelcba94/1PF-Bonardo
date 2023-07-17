@@ -1,0 +1,26 @@
+<div class="mb-3">
+    <!-- BUTTON PARA ABIRR FORM -->
+    <button (click)="onCreateUser()" mat-flat-button color="primary" type="button"><mat-icon>add</mat-icon>Crear alumno</button>
+
+    <h1 class="mb-3 mt-3" appSizes>Lista de alumnos:</h1>
+</div>
+
+<app-users-table 
+[dataSource]="users" 
+(deleteUser)="onDeleteUser($event)"
+(editUser)=" onEditUser($event)"
+></app-users-table>
+
+
+
+
+
+
+
+<!-- SHOW DATOS -->
+<!-- <div class="border border-3 mx-3 p-3">
+    <h2>TUS DATOS:</h2>
+    <pre>Nombre: {{ userForm.value.name | json | uppercase }} </pre>
+    <pre>Apellido: {{ userForm.value.surname | json | uppercase }} </pre>
+    <pre>E-mail: {{ userForm.value.email | json | uppercase }} </pre>
+</div> -->

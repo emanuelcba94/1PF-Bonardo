@@ -9,7 +9,7 @@ import { User } from '../../models';
   styleUrls: ['./form-dialog.component.css']
 })
 export class FormDialogComponent {
-  
+
   nameControl = new FormControl<string | null>(null, [
     Validators.required, 
     Validators.minLength(3)

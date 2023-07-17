@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 // table -am
 import { MatTableModule } from '@angular/material/table';
 import { FullNamePipePipe } from './pipes/full-name-pipe.pipe';
@@ -30,6 +31,7 @@ import { SizesDirective } from './directives/sizes.directive';
     MatCardModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatSelectModule,
     MatInputModule,
     MatTableModule,
     MatDialogModule,

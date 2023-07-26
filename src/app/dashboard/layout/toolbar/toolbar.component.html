@@ -1,0 +1,11 @@
+<!-- TOOLBAR -->
+<mat-toolbar class="shadow-sm" color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+        (click)="drawer?.toggle()">
+        <mat-icon>menu_open</mat-icon>
+    </button>
+    <span class="bg-dark p-3" appSizes>Mi Panel</span>
+    <!-- Pipe DATE -->
+    <p class="today-hour m-auto">{{ today | date: 'fullDate' | uppercase }}</p>
+    <p class="today-hour m-auto">HORA: {{ today | date: 'shortTime'}}</p>
+</mat-toolbar>

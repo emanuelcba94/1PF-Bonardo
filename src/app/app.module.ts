@@ -5,9 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './dashboard/dashboard.module';
-// hora local AR
 import { registerLocaleData } from '@angular/common';
 import localeEsAr from '@angular/common/locales/es-AR';
+import { LoginModule } from './authentication/login/login.module';
 
 registerLocaleData(localeEsAr);
 
@@ -19,7 +19,8 @@ registerLocaleData(localeEsAr);
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DashboardModule
+    DashboardModule,
+    LoginModule
   ],
   providers: [ { provide: LOCALE_ID, useValue: 'es-AR' } ],
   bootstrap: [AppComponent]

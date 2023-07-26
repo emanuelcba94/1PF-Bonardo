@@ -1,17 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormDialogComponent } from './components/form-dialog/form-dialog.component';
-import { User } from './models';
-
-const ELEMENT_DATA: User[] = [
-  // {
-  //   id: 1,
-  //   name: 'marcos',
-  //   surname: 'sancho',
-  //   email: 'marcos@outlook.com',
-  //   password: '12345',
-  // }
-];
+import { User } from '../../../core/models';
+import { UserService } from './user.service';
+import { NotifierService } from 'src/app/core/services/notifier.service';
+import { Observable, Subject } from 'rxjs';
 
 
 @Component({
@@ -19,15 +12,25 @@ const ELEMENT_DATA: User[] = [
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent {
+export class UsersComponent implements OnDestroy {
 
-  public users: User[] = ELEMENT_DATA;
+  public users: Observable<User[]>;
+  public destroyed = new Subject<boolean>();
 
   constructor(
-    private matDialog: MatDialog
-  ) { }
+    private matDialog: MatDialog,
+    private userService: UserService,
+    private notifier: NotifierService
+  ) {
+    this.userService.loadUsers();
+    this.users = this.userService.getUsers();
+  }
 
-  // funtion para abrir el modal Form-dialog
+  ngOnDestroy(): void {
+    this.destroyed.next(true);
+  }
+
+  // ABRIR MODAL // CREAR ALUMNO
   onCreateUser(): void {
     this.matDialog
       // abrir modal
@@ -38,57 +41,42 @@ export class UsersComponent {
       .subscribe({
         next: (v) => {
           if (v) {
-            // this.users.push({
-            //   id: this.users.length + 1,
-            //   name: v.name,
-            //   surname: v.surname,
-            //   email: v.email,
-            //   password: v.password,
-            // })
-            this.users = [
-              ...this.users,
-              {
-                id: this.users.length + 1,
-                name: v.name,
-                surname: v.surname,
-                email: v.email,
-                password: v.password,
-              }
-            ]
-            console.log('Recibimos el valor: ', v)
-          } else {
-            console.log('Se cancelo')
+            this.notifier.showSuccess('Se creo correctamente');
+
+            this.userService.createUser({
+              name: v.name,
+              email: v.email,
+              password: v.password,
+              surname: v.surname,
+            });
           }
         }
       })
   }
 
+  // ELIMINAR ALUMNO
   onDeleteUser(userToDelete: User): void {
-    console.log(userToDelete)
-    if(confirm(`¿Seguro desea eliminar a ${userToDelete.name}?`)){
-      this.users = this.users.filter((u) => u.id !== userToDelete.id)
+    if (confirm(`¿Seguro desea eliminar a ${userToDelete.name}?`)) {
+      this.userService.deleteUserById(userToDelete.id);
     }
+    this.notifier.showError('Eliminado correctamente');
   }
 
+  // EDITAR ALUMNO
   onEditUser(userToEdit: User): void {
     console.log(userToEdit)
 
     this.matDialog
       .open(FormDialogComponent, {
-        data: userToEdit
+        data: userToEdit,
       })
       .afterClosed()
       .subscribe({
-        next: (newData) => {
-          console.log(newData)
-          if(newData) {
-            this.users = this.users.map((user) => {
-              
-              return user.id === userToEdit.id
-              ? { ...user, ...newData }
-              : user ;
-            })
+        next: (userUpdated) => {
+          if (userUpdated) {
+            this.userService.updateUserById(userToEdit.id, userUpdated);
           }
+          this.notifier.showSuccess('Alumno Actualizado');
         }
       })
   };

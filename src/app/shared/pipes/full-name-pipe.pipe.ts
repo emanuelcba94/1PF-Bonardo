@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { User } from 'src/app/dashboard/pages/users/models';
+import { User } from 'src/app/core/models';
 
 @Pipe({
   name: 'fullNamePipe'
@@ -7,7 +7,6 @@ import { User } from 'src/app/dashboard/pages/users/models';
 export class FullNamePipePipe implements PipeTransform {
 
   transform(user: User, ...args: unknown[]): unknown {
-  
     return `${user.name} ${user.surname}`;
   }
 

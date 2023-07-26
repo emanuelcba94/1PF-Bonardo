@@ -1,0 +1,10 @@
+<mat-nav-list>
+    <button mat-icon-button (click)="drawer?.toggle()">
+        <mat-icon>close</mat-icon>
+    </button>
+    <a routerLink="home" mat-list-item>Inicio</a>
+    <a routerLink="users" mat-list-item>Alumnos</a>
+    <a (click)="logout()" mat-list-item>Cerrar sesión</a>
+</mat-nav-list>
+
+<!-- routerLink="/login" -->

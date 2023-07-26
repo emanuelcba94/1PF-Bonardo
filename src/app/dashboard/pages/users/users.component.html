@@ -1,21 +1,21 @@
-<div class="mb-3">
-    <!-- BUTTON PARA ABIRR FORM -->
-    <button (click)="onCreateUser()" mat-flat-button color="primary" type="button"><mat-icon>add</mat-icon>Crear alumno</button>
+<div class="users-section">
 
-    <h1 class="mb-3 mt-3" appSizes>Lista de alumnos:</h1>
+
+    <div class="mb-3">
+        <!-- BUTTON PARA ABIRR FORM -->
+        <button (click)="onCreateUser()" mat-flat-button color="primary" type="button"><mat-icon>add</mat-icon>Crear alumno</button>
+    
+        <h1 class="mb-3 mt-3" appSizes>Lista de alumnos:</h1>
+    </div>
+    
+    <app-users-table 
+    [dataSource]="(users | async) || []" 
+    (deleteUser)="onDeleteUser($event)"
+    (editUser)=" onEditUser($event)"
+    ></app-users-table>
+
+    
 </div>
-
-<app-users-table 
-[dataSource]="users" 
-(deleteUser)="onDeleteUser($event)"
-(editUser)=" onEditUser($event)"
-></app-users-table>
-
-
-
-
-
-
 
 <!-- SHOW DATOS -->
 <!-- <div class="border border-3 mx-3 p-3">

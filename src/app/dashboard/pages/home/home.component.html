@@ -1,43 +1,11 @@
-<div class="grid">
-    <div class="row gap-3">
-        <!-- CARD 1 -->
-        <mat-card class="col-3">
-            <!-- HEADER -->
-            <mat-card-header>
-                <mat-card-title>
-                    Alumnos
-                </mat-card-title>
-            </mat-card-header>
-            <!-- CONTENT -->
-            <mat-card-content>
-                <mat-icon>person</mat-icon>
-            </mat-card-content>
-        </mat-card>
-        <!-- CARD 2 -->
-        <mat-card class="col-3">
-            <!-- HEADER -->
-            <mat-card-header>
-                <mat-card-title>
-                    Alumnos
-                </mat-card-title>
-            </mat-card-header>
-            <!-- CONTENT -->
-            <mat-card-content>
-                <mat-icon>person</mat-icon>
-            </mat-card-content>
-        </mat-card>
-        <!-- CARD 3 -->
-        <mat-card class="col-3">
-            <!-- HEADER -->
-            <mat-card-header>
-                <mat-card-title>
-                    Alumnos
-                </mat-card-title>
-            </mat-card-header>
-            <!-- CONTENT -->
-            <mat-card-content>
-                <mat-icon>person</mat-icon>
-            </mat-card-content>
-        </mat-card>
+<div class="home-section border border-3 p-4">
+
+    <h1 appSizes class="text-center">Bienvenido a Mi panel</h1>
+
+    <!-- Pipe DATE -->
+    <div class="border border-3 p-1">
+        <p class="today-hour m-auto">DIA: {{ today | date: 'fullDate' | uppercase }}</p>
+        <p class="today-hour m-auto">HORA: {{ today | date: 'hh:mm a' | uppercase}}</p>
     </div>
 </div>
+

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Pipe } from '@angular/core';
 import { CreateUserData, UpdateUserData, User } from '../../../core/models';
-import { BehaviorSubject, Observable, Subject, delay, of, take } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, delay, map, of, take } from 'rxjs';
 
 
 const USER_DB: Observable<User[]> = of([
@@ -43,7 +43,15 @@ export class UserService {
     return this.users$;
   }
 
-  // ALUMNO CREADO
+  getUsersById(id: number): Observable <User | undefined> {
+    return this.users$.pipe(
+      map( (users ) => users.find((u) => u.id === id)),
+      take(1),
+      )
+  }
+
+
+  // USUARIO CREADO
   createUser(user: CreateUserData): void {
     this.users$.pipe(take(1)).subscribe({
       next: (arrayActual) => {
@@ -55,7 +63,7 @@ export class UserService {
     });
   }
 
-  // ALUMNO ACTUALIZADO
+  // USUARIO ACTUALIZADO
   updateUserById(id: number, usuarioActualizado: UpdateUserData): void {
     this.users$.pipe(take(1)).subscribe({
       next: (arrayActual) => {
@@ -68,7 +76,7 @@ export class UserService {
     });
   }
 
-  // ALUMNO ELIMINADO
+  // USUARIO ELIMINADO
   deleteUserById(id: number): void {
     this._users$.pipe(take(1)).subscribe({
       next: (arrayActual) => {

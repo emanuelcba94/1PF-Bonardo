@@ -4,8 +4,8 @@
         (click)="drawer?.toggle()">
         <mat-icon>menu_open</mat-icon>
     </button>
-    <span class="bg-dark p-3" appSizes>Mi Panel</span>
+    <span class="bg-dark p-3 mx-3" appSizes>Mi Panel</span>
     <!-- Pipe DATE -->
-    <p class="today-hour m-auto">{{ today | date: 'fullDate' | uppercase }}</p>
-    <p class="today-hour m-auto">HORA: {{ today | date: 'shortTime'}}</p>
+    <p class="today-hour m-auto border border-2 p-1">{{ today | date: 'fullDate' | uppercase }}</p>
+    <p class="today-hour m-auto border border-2 p-1">HORA: {{ today | date: 'hh:mm a' | uppercase}}</p>
 </mat-toolbar>

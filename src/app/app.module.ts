@@ -4,9 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { registerLocaleData } from '@angular/common';
 import localeEsAr from '@angular/common/locales/es-AR';
+
+import { CoursesModule } from './dashboard/pages/courses/courses.module';
+import { StudentModule } from './dashboard/pages/student/student.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { LoginModule } from './authentication/login/login.module';
 
 registerLocaleData(localeEsAr);
@@ -19,6 +22,8 @@ registerLocaleData(localeEsAr);
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    CoursesModule,
+    StudentModule,
     DashboardModule,
     LoginModule
   ],

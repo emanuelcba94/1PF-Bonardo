@@ -30,7 +30,7 @@ export class UsersComponent implements OnDestroy {
     this.destroyed.next(true);
   }
 
-  // ABRIR MODAL // CREAR ALUMNO
+  // ABRIR MODAL // CREAR USUARIO
   onCreateUser(): void {
     this.matDialog
       // abrir modal
@@ -54,7 +54,7 @@ export class UsersComponent implements OnDestroy {
       })
   }
 
-  // ELIMINAR ALUMNO
+  // ELIMINAR USUARIO
   onDeleteUser(userToDelete: User): void {
     if (confirm(`¿Seguro desea eliminar a ${userToDelete.name}?`)) {
       this.userService.deleteUserById(userToDelete.id);
@@ -62,7 +62,7 @@ export class UsersComponent implements OnDestroy {
     this.notifier.showError('Eliminado correctamente');
   }
 
-  // EDITAR ALUMNO
+  // EDITAR USUARIO
   onEditUser(userToEdit: User): void {
     console.log(userToEdit)
 
@@ -76,7 +76,7 @@ export class UsersComponent implements OnDestroy {
           if (userUpdated) {
             this.userService.updateUserById(userToEdit.id, userUpdated);
           }
-          this.notifier.showSuccess('Alumno Actualizado');
+          this.notifier.showSuccess('Usuario Actualizado');
         }
       })
   };

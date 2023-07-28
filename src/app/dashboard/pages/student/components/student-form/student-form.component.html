@@ -1,10 +1,10 @@
 <h1 mat-dialog-title>
-    {{ editingUser ? 
-        "Editar a " + editingUser.name + " " + editingUser.surname   
-        : 'Crear usuario'
+    {{ editingStudent ? 
+        "Editar a " + editingStudent.name + " " + editingStudent.surname   
+        : 'Crear alumno'
     }}</h1>
 <div mat-dialog-content>
-    <form [formGroup]="userForm" class="grid p-3">
+    <form [formGroup]="studentForm" class="grid p-3">
         <!-- INPUT NAME -->
         <mat-form-field class="col-sm-6 col-lg-6 mb-3 px-3" appearance="outline">
             <mat-label>Nombre</mat-label>
@@ -29,26 +29,28 @@
             </mat-error>
             <mat-icon matSuffix color="primary">sentiment_very_satisfied</mat-icon>
         </mat-form-field>
-        <!-- INPUT EMAIL -->
+        <!-- INPUT IDENTITY -->
         <mat-form-field class="col-sm-6 col-lg-6 mb-3 px-3" appearance="outline">
-            <mat-label>E-mail</mat-label>
-            <input formControlName="email" matInput type="email" name="email" placeholder="ejemplo123@email.com">
-            <mat-error *ngIf="emailControl.hasError('required') ">
+            <mat-label>DNI</mat-label>
+            <input formControlName="identity" matInput type="text" name="identity" placeholder="ejemplo 7.777.777">
+            <mat-error *ngIf="identityControl.hasError('required') ">
                 Este campo es requerido
             </mat-error>
             <mat-icon matSuffix color="primary">sentiment_very_satisfied</mat-icon>
         </mat-form-field>
-        <!-- INPUT PASSWORD -->
+        <!-- INPUT REGISTRATION -->
         <mat-form-field class="col-sm-6 col-lg-6 mb-3 px-3" appearance="outline">
-            <mat-label>Contraseña</mat-label>
-            <input matInput formControlName="password" type="password" name="password">
-            <mat-error *ngIf="passwordControl.hasError('required') ">
-                Por favor ingresa tu contraseña
+            <mat-label>Fecha de registro</mat-label>
+            <input formControlName="registration" matInput type="text" name="registration" [min]="minDate"
+            [max]="maxDate" [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <!-- ERRORES -->
+            <mat-error *ngIf="identityControl.hasError('required') ">
+                Este campo es requerido
             </mat-error>
-            <mat-error *ngIf="passwordControl.hasError('minlength') ">
-                El campo debe tener al menos {{ passwordControl.errors?.['minlength']?.requiredLength }} caracteres.
-            </mat-error>
-            <mat-icon matSuffix color="primary">sentiment_very_satisfied</mat-icon>
+            <!-- <mat-icon matSuffix color="primary">sentiment_very_satisfied</mat-icon> -->
         </mat-form-field>
     </form>
 </div>

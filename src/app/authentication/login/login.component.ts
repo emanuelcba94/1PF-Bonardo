@@ -19,10 +19,13 @@ export class LoginComponent implements OnInit {
       usuario: ['', Validators.required],
       password: ['',Validators.required]
     })
+
   }
 
   ngOnInit(): void {
+    // CARGAR DATOS
   }
+
 
   // BOTON DE INGRESAR
   ingresar() {

@@ -1,6 +1,8 @@
 <div class="home-section border border-3 p-4">
 
     <h1 appSizes class="text-center">Bienvenido a Mi panel</h1>
+    
+    <p class="border border-3 p-1 fs-5">Usuario: {{(authUser$ | async)?.name}} {{(authUser$ | async)?.surname}}</p>
 
     <!-- Pipe DATE -->
     <div class="border border-3 p-1">

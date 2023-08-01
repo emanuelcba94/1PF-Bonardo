@@ -36,6 +36,9 @@
             <mat-error *ngIf="identityControl.hasError('required') ">
                 Este campo es requerido
             </mat-error>
+            <mat-error *ngIf="identityControl.hasError('minlength') ">
+                El campo debe tener al menos {{ identityControl.errors?.['minlength']?.requiredLength }} caracteres.
+            </mat-error>
             <mat-icon matSuffix color="primary">sentiment_very_satisfied</mat-icon>
         </mat-form-field>
         <!-- INPUT REGISTRATION -->

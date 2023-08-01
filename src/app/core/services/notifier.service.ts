@@ -42,4 +42,12 @@ export class NotifierService {
       title
     })
   }
+
+  showErrorLogin(message: string, title = 'Invalido'): void {
+    this.notifier$.next({
+      type: 'error',
+      message,
+      title
+    })
+  }
 }

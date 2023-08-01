@@ -26,7 +26,7 @@ export class StudentFormComponent {
   ]);
   identityControl = new FormControl<number | null>(null, [
     Validators.required,
-    Validators.minLength(6)
+    Validators.minLength(8)
   ]);
   registrationControl = new FormControl<string | null>(null, [
     Validators.required,

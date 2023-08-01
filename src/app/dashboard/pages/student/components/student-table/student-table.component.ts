@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Student } from '../../models';
 
 @Component({
@@ -7,8 +7,9 @@ import { Student } from '../../models';
   styleUrls: ['./student-table.component.css']
 })
 export class StudentTableComponent {
-  public dataSource: Student[] = [];
-  public displayedColumns = ['id', 'name', 'surname', 'identity', 'registration'];
+  public displayedColumns = ['id', 'name', 'surname', 'identity', 'registration', 'actions'];
 
-
+  @Input()
+  dataSource: Student[] = [];
+  
 }

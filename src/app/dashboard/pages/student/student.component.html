@@ -7,7 +7,9 @@
         <button (click)="onCreateStudent()" mat-flat-button color="primary" type="button"><mat-icon>add</mat-icon>Crear alumno</button>
     </div>
 
-    <app-student-table></app-student-table>
+    <app-student-table 
+    [dataSource]="(student| async) || []"
+    ></app-student-table>
 
 
 </div>

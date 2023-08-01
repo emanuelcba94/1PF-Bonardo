@@ -15,7 +15,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { FullNamePipePipe } from './pipes/full-name-pipe.pipe';
 import { SizesDirective } from './directives/sizes.directive';
-
+// Angular Material Nvos
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SizesDirective } from './directives/sizes.directive';
     MatTableModule,
     MatDialogModule,
     FullNamePipePipe,
-    SizesDirective
+    SizesDirective,
+    MatProgressSpinnerModule
   ],
 
 })

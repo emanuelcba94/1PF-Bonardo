@@ -5,3 +5,17 @@ export interface Student {
     identity: number,
     registration: string,
 }
+
+export interface CreateStudentData {
+    name: string;
+    surname: string;
+    identity: number,
+    registration: string,
+}
+
+export interface UpdateStudentData {
+    name?: string;
+    surname?: string;
+    identity?: number;
+    registration?: string;
+}

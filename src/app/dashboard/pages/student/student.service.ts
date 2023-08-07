@@ -1,25 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CreateStudentData, Student } from './models';
-import { BehaviorSubject, Observable, of, take } from 'rxjs';
-
-
-
-const STUDENT_CR: Observable<Student[]> = of([
-  {
-    id: 1,
-    name: 'carlos',
-    surname: 'sancho',
-    identity: 38452699,
-    registration: '07/05/1993',
-  },
-  {
-    id: 2,
-    name: 'jose',
-    surname: 'perez',
-    identity: 38452652,
-    registration: '02/03/1997',
-  },
-]);
+import { CreateStudentData, Student, UpdateStudentData } from './models';
+import { BehaviorSubject, Observable, map, mergeMap, take } from 'rxjs';
+import { NotifierService } from 'src/app/core/services/notifier.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environments';
 
 
 @Injectable({
@@ -30,34 +14,73 @@ export class StudentService {
   private student$ = this._student$.asObservable();
 
 
+  constructor(
+    private notifier: NotifierService, 
+    private httpClient: HttpClient) { }
 
-  constructor() { }
 
-
+  // CARGA DE ALUMNOS
   loadStudent(): void {
-    STUDENT_CR.subscribe({
-      next: (studentsForm) => this._student$.next(studentsForm),
-    });
+    // Con HTTP CLIENT:
+    this.httpClient.get<Student[]>(environment.baseApiUrl + '/student').subscribe({
+      next: (response) => {
+        // console.log('response', response)
+        this._student$.next(response);
+      },
+      error: () => {
+        // ERROR
+        this.notifier.showErrorServer('Error al cargar los alumnos');
+      },
+      complete: () => {
+        // SE COMPLETO EL OBSERVABLE
+      },
+    })
   }
 
-
-  getUsers(): Observable<Student[]> {
+  getStudent(): Observable<Student[]> {
     return this.student$;
   }
 
-  
-
   // ALUMNO CREADO
-  createStudent(student: CreateStudentData): void {
-    this.student$.pipe(take(1)).subscribe({
-      next: (arrayA) => {
-        this._student$.next([
-          ...arrayA,
-          { ...student, id: arrayA.length + 1 },
-        ]);
-      },
-    });
+  createStudent(payload: CreateStudentData): void {
+    // Con HTTP CLIENT:
+    this.httpClient.post<Student>(environment.baseApiUrl + '/student', {...payload})
+    .pipe(
+      mergeMap((studentCreated) => this.student$.pipe(
+        take(1),
+        map((arrayA) => [...arrayA, studentCreated])
+      ))
+    )
+    .subscribe({
+      next: (arrayActualizado) => {
+        this._student$.next(arrayActualizado);
+      }
+    })
+  }
+
+  // ALUMNO ACTUALIZADO
+  updateStudentById(id: number, alumnoActualizado: UpdateStudentData): void {
+    // Con HTTP CLIENT:
+    this.httpClient.put(environment.baseApiUrl + '/student/' + id, alumnoActualizado).subscribe({
+      next: (alumnoActualizado) => 
+      this.loadStudent(),
+    })
   }
 
 
+  // ALUMNO ELIMINADO
+  deleteStudentById(id: number): void {
+    // Con HTTP CLIENT:
+    this.httpClient.delete(environment.baseApiUrl + '/student/' + id).pipe(
+      mergeMap(
+        (responseUserDelete) => this.student$.pipe(take(1), map((arrayA) => arrayA.filter((u) => u.id !== id))
+        )
+      )
+    ).subscribe({
+      next: ((arrayActualizado) => this._student$.next(arrayActualizado)),
+    })
+ 
+    this.student$.pipe(take(1))
+
+  }
 }

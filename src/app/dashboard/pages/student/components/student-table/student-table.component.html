@@ -6,16 +6,16 @@
         <td mat-cell *matCellDef="let student"> {{student.id}} </td>
     </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let student"> {{student.name}} </td>
+    <!-- Name and SurName Column -->
+    <ng-container matColumnDef="fullNamePipe">
+        <th mat-header-cell *matHeaderCellDef> Nombre y apellido</th>
+        <td mat-cell *matCellDef="let student"> {{student | fullNamePipe | json | uppercase}} </td>
     </ng-container>
 
-    <!-- SurName Column -->
-    <ng-container matColumnDef="surname">
-        <th mat-header-cell *matHeaderCellDef> Apellido </th>
-        <td mat-cell *matCellDef="let student"> {{student.surname}} </td>
+    <!-- Courses Column -->
+    <ng-container matColumnDef="courses">
+        <th mat-header-cell *matHeaderCellDef> Curso </th>
+        <td mat-cell *matCellDef="let student"> {{student.courses}} </td>
     </ng-container>
 
     <!-- Identity Column -->
@@ -33,19 +33,17 @@
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let user">
+        <td mat-cell *matCellDef="let student">
             <!-- Button Edit -->
-            <button mat-icon-button color="accent">
+            <button (click)="editStudent.emit(student)" mat-icon-button color="accent">
                 <mat-icon>edit</mat-icon>
             </button>
             <!-- Button Delete -->
-            <button mat-icon-button color="warn">
+            <button (click)="deleteStudent.emit(student)" mat-icon-button color="warn">
                 <mat-icon>delete</mat-icon>
             </button>
         </td>
     </ng-container>
-
-
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

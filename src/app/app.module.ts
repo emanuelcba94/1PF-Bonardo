@@ -7,12 +7,8 @@ import { AppComponent } from './app.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeEsAr from '@angular/common/locales/es-AR';
+import { HttpClientModule } from '@angular/common/http';
 
-
-// import { CoursesModule } from './dashboard/pages/courses/courses.module';
-// import { StudentModule } from './dashboard/pages/student/student.module';
-// import { DashboardModule } from './dashboard/dashboard.module';
-// import { LoginModule } from './authentication/login/login.module';
 
 registerLocaleData(localeEsAr);
 
@@ -23,12 +19,8 @@ registerLocaleData(localeEsAr);
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule
-
-    // CoursesModule,
-    // StudentModule,
-    // DashboardModule,
-    // LoginModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [ { provide: LOCALE_ID, useValue: 'es-AR' } ],
   bootstrap: [AppComponent]

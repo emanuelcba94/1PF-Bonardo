@@ -9,6 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
+  
   return authService.isAithenticated().pipe(
     map((isAuth) => {
       // si esta autenticado puede ver el dashboard

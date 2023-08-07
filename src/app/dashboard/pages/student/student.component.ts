@@ -22,28 +22,25 @@ export class StudentComponent {
     private notifier: NotifierService
   ) {
     this.studentService.loadStudent();
-    this.student = this.studentService.getUsers();
+    this.student = this.studentService.getStudent();
   }
-
 
 
   // ABRIR MODAL // CREAR ALUMNO
   onCreateStudent(): void {
     this.matDialog
-      // abrir modal
       .open(StudentFormComponent)
-      
       .afterClosed()
-      // hacer esto... guardar valor
       .subscribe({
         next: (v) => {
           if (v) {
             this.notifier.showSuccess('Se creo correctamente');
-
+            // console.log(v)
             this.studentService.createStudent({
               name: v.name,
               surname: v.surname,
               identity: v.identity,
+              courses: v.courses,
               registration: v.registration,
             });
           }
@@ -51,5 +48,29 @@ export class StudentComponent {
       })
   }
 
+  // EDITAR ALUMNO
+  onEditStudent(studentToEdit: Student): void {
+    this.matDialog
+      .open(StudentFormComponent, {
+        data: studentToEdit,
+      })
+      .afterClosed()
+      .subscribe({
+        next: (studentUpdated) => {
+          if (studentUpdated) {
+            this.studentService.updateStudentById(studentToEdit.id, studentUpdated);
+          }
+          this.notifier.showSuccess('Alumno Actualizado');
+        }
+      })
+  };
+
+  // ELIMINAR USUARIO
+  onDeleteStudent(studentToDelete: Student): void {
+    if (confirm(`¿Seguro desea eliminar a ${studentToDelete.name}?`)) {
+      this.studentService.deleteStudentById(studentToDelete.id);
+    }
+    this.notifier.showError('Eliminado correctamente');
+  }
 
 }

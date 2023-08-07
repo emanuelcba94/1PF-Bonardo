@@ -3,6 +3,11 @@ import { Student } from '../../models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+interface Course {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-student-form',
   templateUrl: './student-form.component.html',
@@ -12,7 +17,15 @@ export class StudentFormComponent {
   minDate = new Date(1900, 0, 1); 
   maxDate = new Date(2030, 0, 1);
 
-  
+
+  courses: Course[] = [
+    {value: 'Angular-0', viewValue: 'Angular'},
+    {value: 'SQL-1', viewValue: 'SQL'},
+    {value: 'JavaScript-2', viewValue: 'JavaScript'},
+    {value: 'HTML-3', viewValue: 'HTML'},
+  ];
+
+
   editingStudent?: Student;
 
 
@@ -28,6 +41,9 @@ export class StudentFormComponent {
     Validators.required,
     Validators.minLength(8)
   ]);
+  coursesControl = new FormControl<string | null>(null, [
+    Validators.required,
+  ]);
   registrationControl = new FormControl<string | null>(null, [
     Validators.required,
     Validators.minLength(6)
@@ -37,6 +53,7 @@ export class StudentFormComponent {
     name: this.nameControl,
     surname: this.surnameControl,
     identity: this.identityControl,
+    courses: this.coursesControl,
     registration: this.registrationControl
   })
 
@@ -51,15 +68,13 @@ export class StudentFormComponent {
       this.nameControl.setValue(this.data.name);
       this.surnameControl.setValue(this.data.surname);
       this.identityControl.setValue(this.data.identity);
+      this.coursesControl.setValue(this.data.courses);
       this.registrationControl.setValue(this.data.registration);
     }
   }
 
   // GUARDAR
   onSubmit(): void {
-    // alert(JSON.stringify(this.userForm.value));
-
-    // Si el usuario no rellena los campos que no se pueda guardar
     if (this.studentForm.invalid) {
       this.studentForm.markAllAsTouched()
     } else {

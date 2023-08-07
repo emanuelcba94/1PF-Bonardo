@@ -1,49 +1,76 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Courses } from './models';
 import { CourseService } from './course.service';
 import { Observable, take } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { NotifierService } from 'src/app/core/services/notifier.service';
+import { CoursesFormComponent } from './courses-form/courses-form.component';
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.css']
 })
-export class CoursesComponent implements OnInit, OnDestroy {
-  // public dataSource: Courses[] = [];
-  public displayedColumns = ['id', 'name', 'description', 'price', 'dedication', 'actions'];
-  public data$: Observable<Courses[]>
+export class CoursesComponent {
+
+  public course: Observable<Courses[]>
 
 
-
-  constructor(private courseService: CourseService) {
+  constructor(
+    private courseService: CourseService,
+    private matDialog: MatDialog,
+    private notifier: NotifierService
+  ) {
     // OBTENGO LOS DATOS EN LA TABLE
-    this.data$ = this.courseService.getCourses();
-  }
-
-
-  ngOnDestroy(): void {
-    // onDestroy
-  }
-
-  ngOnInit(): void {
-    // CARGAR DATOS/CURSOS
     this.courseService.loadCourses();
-
-    // OBTENER CURSOS
-    // this.courseService.getCourses().subscribe({
-    //   next: (data) => console.log('data: ', data),
-    // });
-  }
-
-  // CREAR CURSOS
-  onCreate(): void {
-    this.courseService.create();
+    this.course = this.courseService.getCourses();
   }
 
 
-  // ELIMINAR CURSOS
-  onDelete(id: number): void {
-    this.courseService.deleteById(id);
+  // ABRIR MODAL // CREAR CURSO
+  onCreateCourse(): void {
+    this.matDialog
+      .open(CoursesFormComponent)
+      .afterClosed()
+      .subscribe({
+        next: (v) => {
+          if (v) {
+            this.notifier.showSuccess('Se creo correctamente');
+            // console.log(v)
+            this.courseService.createCourses({
+              name: v.name,
+              description: v.description,
+              price: v.price,
+              dedication: v.dedication,
+            });
+          }
+        }
+      })
+  }
+
+  // EDITAR CURSO
+  onEditCourse(cuorseToEdit: Courses): void {
+    this.matDialog
+      .open(CoursesFormComponent, {
+        data: cuorseToEdit,
+      })
+      .afterClosed()
+      .subscribe({
+        next: (cuorseUpdated) => {
+          if (cuorseUpdated) {
+            this.courseService.updateCourseById(cuorseToEdit.id, cuorseUpdated);
+          }
+          this.notifier.showSuccess('Curso Actualizado');
+        }
+      })
+  };
+
+  // ELIMINAR CURSO
+  onDeleteCourse(courseToDelete: Courses): void {
+    if (confirm(`¿Seguro desea eliminar el curso de ${courseToDelete.name}?`)) {
+      this.courseService.deleteCourseById(courseToDelete.id);
+    }
+    this.notifier.showError('Eliminado correctamente');
   }
 
 }

@@ -9,7 +9,8 @@
 
     <app-student-table 
     [dataSource]="(student| async) || []"
+    (editStudent)=" onEditStudent($event)"
+    (deleteStudent)="onDeleteStudent($event)"
     ></app-student-table>
-
 
 </div>

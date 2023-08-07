@@ -1,75 +1,89 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, take } from 'rxjs';
-import { Courses } from './models';
+import { BehaviorSubject, Observable, take, mergeMap, map } from 'rxjs';
+import { Courses, CreateCoursesData, UpdateCoursesData } from './models';
+import { HttpClient } from '@angular/common/http';
+import { NotifierService } from 'src/app/core/services/notifier.service';
+import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
-  private courses$ = new BehaviorSubject<Courses[]>([]);
+  private _courses$ = new BehaviorSubject<Courses[]>([]);
+  private courses$ = this._courses$.asObservable();
 
 
-  constructor() { }
+  constructor(
+    private notifier: NotifierService, 
+    private httpClient: HttpClient) { }
+
 
   // CARGAR CURSOS
   loadCourses(): void {
-    this.courses$.next([
-      {
-        id: 1,
-        name: 'Angular',
-        description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.',
-        price: 30.000,
-        dedication: 'Moderada'
+    // Con HTTP CLIENT:
+    this.httpClient.get<Courses[]>(environment.baseApiUrl + '/courses').subscribe({
+      next: (response) => {
+        this._courses$.next(response);
       },
-      {
-        id: 2,
-        name: 'SQL',
-        description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.',
-        price: 40.000,
-        dedication: 'Moderada'
+      error: () => {
+        // ERROR
+        this.notifier.showErrorServer('Error al cargar los cursos');
       },
-      {
-        id: 3,
-        name: 'JavaScript',
-        description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.',
-        price: 35.000,
-        dedication: 'Alta'
-      }
-
-    ])
+      complete: () => {
+        // SE COMPLETO EL OBSERVABLE
+      },
+    })
   }
 
+  
   // OBTENER CURSOS
   getCourses(): Observable<Courses[]> {
-    return this.courses$.asObservable();
+    return this.courses$;
   }
 
-  // CREAR/PUSH DATOS AL ARRAY
-  create(): void {
-    this.courses$.pipe(take(1)).subscribe({
+
+  // CURSO CREADO
+  createCourses(payload: CreateCoursesData): void {
+
+    // Con HTTP CLIENT:
+    this.httpClient.post<Courses>(environment.baseApiUrl + '/courses', {...payload})
+    .pipe(
+      mergeMap((courseCreate) => this.courses$.pipe(
+        take(1),
+        map((arrayA) => [...arrayA, courseCreate])
+      ))
+    )
+    .subscribe({
       next: (arrayActual) => {
-        this.courses$.next([
-          ...arrayActual,
-          {
-            id: arrayActual.length + 1,
-            name: 'Bootstrap',
-            description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.',
-            price: 25.000,
-            dedication: 'Moderada'
-          }
-        ]);
+        this._courses$.next(arrayActual);
       }
     })
   }
 
-  // METODO ELIMINAR CURSO
-  deleteById(id: number): void {
-    this.courses$.pipe(take(1)).subscribe({
-      next: (arrayActual) => {
-        this.courses$.next(
-          arrayActual.filter((c) => c.id !== id)
-        );
-      }
+  // CURSO ACTUALIZADO
+  updateCourseById(id: number, cursoActualizado: UpdateCoursesData): void {
+    // Con HTTP CLIENT:
+    this.httpClient.put(environment.baseApiUrl + '/courses/' + id, cursoActualizado).subscribe({
+      next: (cursoActualizado) => 
+      this.loadCourses(),
     })
   }
+
+
+  // CURSO ELIMINADO
+  deleteCourseById(id: number): void {
+    // Con HTTP CLIENT:
+    this.httpClient.delete(environment.baseApiUrl + '/courses/' + id).pipe(
+      mergeMap(
+        (responseCourseDelete) => this.courses$.pipe(take(1), map((arrayA) => arrayA.filter((u) => u.id !== id))
+        )
+      )
+    ).subscribe({
+      next: ((arrayActual) => this._courses$.next(arrayActual)),
+    })
+    
+    this.courses$.pipe(take(1))
+
+  }
+
 }

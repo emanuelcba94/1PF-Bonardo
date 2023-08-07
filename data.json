@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "name": "emanuel",
+      "surname": "bonardo",
+      "email": "emanuelb@fake.com",
+      "password": "12345",
+      "token": "htryd2eoR5aeR7rTgY59",
+      "id": 1
+    },
+    {
+      "name": "carlos ",
+      "email": "carlos@gmail.com",
+      "password": "12345678",
+      "surname": "sanchez",
+      "token": "BIjmMEWlIaoyiCEq2gI3",
+      "id": 2
+    }
+  ],
+  "courses": [
+    {
+      "name": "Angular",
+      "description": "Aprenderás a crear y mantener aplicaciones web en una sola página.",
+      "price": "100",
+      "dedication": "Moderado-1",
+      "id": 1
+    },
+    {
+      "name": "JavaScript",
+      "description": "Desarrollar e integrar componentes del front-end para crear un sitio web increíble.",
+      "price": "120",
+      "dedication": "Alto-2",
+      "id": 2
+    },
+    {
+      "name": "SQL",
+      "description": "Explotar información y generar indicadores, por medio de la extracción de datos.",
+      "price": "95",
+      "dedication": "Moderado-1",
+      "id": 3
+    },
+    {
+      "name": "HTML",
+      "description": "Aprenderás el Lenguaje de Marcado de Hipertexto. ",
+      "price": "85",
+      "dedication": "Bajo-0",
+      "id": 4
+    }
+  ],
+  "student": [
+    {
+      "name": "carla ",
+      "surname": "gonzalez",
+      "identity": "3.455.825",
+      "courses": "Angular-0",
+      "registration": "2023-07-17T03:00:00.000Z",
+      "id": 1
+    },
+    {
+      "name": "lucas",
+      "surname": "lopez",
+      "identity": "4.526.596",
+      "courses": "SQL-1",
+      "registration": "2023-08-03T03:00:00.000Z",
+      "id": 2
+    },
+    {
+      "name": "joaquin",
+      "surname": "valle",
+      "identity": "3.125.568",
+      "courses": "HTML-3",
+      "registration": "2023-08-01T03:00:00.000Z",
+      "id": 3
+    }
+  ]
+}

@@ -50,4 +50,12 @@ export class NotifierService {
       title
     })
   }
+
+  showErrorServer(message: string, title = 'Error de conexión con el Servidor'): void {
+    this.notifier$.next({
+      type: 'error',
+      message,
+      title
+    })
+  }
 }

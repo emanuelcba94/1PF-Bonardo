@@ -24,6 +24,10 @@ describe('AuthService', () => {
         httpController = TestBed.inject(HttpTestingController);
     })
 
+    afterEach (() => {
+        httpController.verify();
+    })
+
     // Test-Service-01
     it('login() = valido, el observable authUser$ debe emitir un valor', (done) => {
         const mockFakeUser: User = {

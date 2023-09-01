@@ -6,7 +6,6 @@ import { NotifierService } from 'src/app/core/services/notifier.service';
 import { Student } from './models';
 import { Observable } from 'rxjs';
 
-
 @Component({
   selector: 'app-student',
   templateUrl: './student.component.html',
@@ -25,8 +24,6 @@ export class StudentComponent {
     this.student = this.studentService.getStudent();
   }
 
-
-  // ABRIR MODAL // CREAR ALUMNO
   onCreateStudent(): void {
     this.matDialog
       .open(StudentFormComponent)
@@ -35,20 +32,16 @@ export class StudentComponent {
         next: (v) => {
           if (v) {
             this.notifier.showSuccess('Se creo correctamente');
-            // console.log(v)
             this.studentService.createStudent({
               name: v.name,
               surname: v.surname,
-              identity: v.identity,
-              courses: v.courses,
-              registration: v.registration,
+              email: v.email,
             });
           }
         }
       })
   }
 
-  // EDITAR ALUMNO
   onEditStudent(studentToEdit: Student): void {
     this.matDialog
       .open(StudentFormComponent, {
@@ -65,12 +58,10 @@ export class StudentComponent {
       })
   };
 
-  // ELIMINAR USUARIO
   onDeleteStudent(studentToDelete: Student): void {
     if (confirm(`¿Seguro desea eliminar a ${studentToDelete.name}?`)) {
       this.studentService.deleteStudentById(studentToDelete.id);
     }
     this.notifier.showError('Eliminado correctamente');
   }
-
 }

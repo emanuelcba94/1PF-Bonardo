@@ -1,6 +1,5 @@
-import { Component, Input, Output, EventEmitter  } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild  } from '@angular/core';
 import { User } from '../../../../../core/models';
-
 
 @Component({
   selector: 'app-users-table',
@@ -8,7 +7,7 @@ import { User } from '../../../../../core/models';
   styleUrls: ['./users-table.component.css']
 })
 export class UsersTableComponent {
-  displayedColumns: string[] = ['id', 'fullNamePipe', 'email', 'password', 'actions'];
+  displayedColumns: string[] = ['id', 'fullNamePipe', 'email', 'password', 'role', 'actions'];
 
   @Input()
   dataSource: User[] = [];

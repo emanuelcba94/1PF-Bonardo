@@ -5,37 +5,39 @@ import { User } from '../core/models';
 import { NotifierService } from '../core/services/notifier.service';
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '../store/auth/auth.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private _authUser$ = new BehaviorSubject<User | null>(null);
-  public authUser$ = this._authUser$.asObservable();
-
 
   constructor(
     private notifier: NotifierService,
     private router: Router,
     private httpClient: HttpClient,
+    private store: Store
   ) { }
 
 
-  // Para el GUARD
   isAithenticated(): Observable<boolean> {
     return this.httpClient.get<User[]>('http://localhost:3000/users', {
       params: {
         token: localStorage.getItem('token') || '',
       }
     }).pipe(map((usersResult) => {
+      if(usersResult.length) {
+          const authUser = usersResult[0];
+          this.store.dispatch(AuthActions.setAuthUser({payload: authUser}));
+      }
       return !!usersResult.length
     })
     )
   }
 
-  // Funcion login
-  login(payload: LoginPanel): void {
 
+  login(payload: LoginPanel): void {
     this.httpClient.get<User[]>('http://localhost:3000/users', {
       params: {
         email: payload.email || '',
@@ -43,18 +45,14 @@ export class AuthService {
       }
     }).subscribe({
       next: (response) => {
-        // console.log(response)
         if (response.length) {
           const authUser = response[0];
-          // Login valido
-          this._authUser$.next(response[0])
-          // Redireccionar al dashboard
+          this.store.dispatch(AuthActions.setAuthUser({payload: authUser}));
           this.router.navigate(['/dashboard'])
           localStorage.setItem('token', authUser.token);
         } else {
-          // Error 
           this.notifier.showErrorLogin('Email o contraseña invalidos')
-          this._authUser$.next(null);
+          this.store.dispatch(AuthActions.setAuthUser({payload: null}));
         }
       },
       error: (err) => {
@@ -71,5 +69,9 @@ export class AuthService {
         }
       }
     })
+  }
+
+  public logout(): void {
+    this.store.dispatch(AuthActions.setAuthUser({payload: null}));
   }
 }

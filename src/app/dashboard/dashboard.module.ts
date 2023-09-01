@@ -15,7 +15,6 @@ import { NavMenuComponent } from './layout/nav-menu/nav-menu.component';
 import { ToolbarComponent } from './layout/toolbar/toolbar.component';
 
 
-
 @NgModule({
   declarations: [
     DashboardComponent,

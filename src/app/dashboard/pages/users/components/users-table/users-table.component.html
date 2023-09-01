@@ -1,37 +1,33 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
     <!-- Position Column -->
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ID </th>
         <td mat-cell *matCellDef="let user"> {{user.id}} </td>
     </ng-container>
-
     <!-- Name Column -->
     <ng-container matColumnDef="fullNamePipe">
         <th mat-header-cell *matHeaderCellDef> Nombre y apellido</th>
         <td mat-cell *matCellDef="let user"> {{user | fullNamePipe | json | uppercase}} </td>
     </ng-container>
-
     <!-- Email Column -->
     <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef> Email </th>
         <td mat-cell *matCellDef="let user"> {{user.email}} </td>
     </ng-container>
-
     <!-- Contraseña Column -->
     <ng-container matColumnDef="password">
         <th mat-header-cell *matHeaderCellDef> Contraseña </th>
         <td mat-cell *matCellDef="let user"> {{user.password}} </td>
     </ng-container>
-
+    <!-- Rol Column -->
+    <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef> Rol </th>
+        <td mat-cell *matCellDef="let user"> {{user.role}} </td>
+    </ng-container>
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let user">
-            <!-- Button Visibility -->
-            <button [routerLink]="user.id" mat-icon-button color="primary">
-                <mat-icon>visibility</mat-icon>
-            </button>
             <!-- Button Edit -->
             <button (click)="editUser.emit(user)" mat-icon-button color="accent">
                 <mat-icon>edit</mat-icon>

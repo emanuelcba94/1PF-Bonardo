@@ -27,16 +27,19 @@ export class FormDialogComponent {
     Validators.required,
     Validators.minLength(6)
   ]);
+  roleControl = new FormControl<string | null>(null, [
+    Validators.required,
+  ]);
 
   userForm = new FormGroup({
     name: this.nameControl,
     surname: this.surnameControl,
     email: this.emailControl,
-    password: this.passwordControl
+    password: this.passwordControl,
+    role: this.roleControl
   })
 
 
-  // GUARDAR Y EDITAR LA INFORMACION CARGADA AL FORMULARIO
   constructor(
     private dialogRef: MatDialogRef<FormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data?: User, 
@@ -47,18 +50,21 @@ export class FormDialogComponent {
         this.surnameControl.setValue(this.data.surname);
         this.emailControl.setValue(this.data.email);
         this.passwordControl.setValue(this.data.password);
+        this.roleControl.setValue(this.data.role);
       }
     }
 
-  // GUARDAR
   onSubmit(): void {
-    // alert(JSON.stringify(this.userForm.value));
-
-    // Si el usuario no rellena los campos que no se pueda guardar
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched()
     } else {
-      this.dialogRef.close(this.userForm.value)
+      const payload: any = {
+        ...this.userForm.value
+      }
+      if(this.editingUser){
+        payload['token'] = this.editingUser.token;
+      }
+      this.dialogRef.close(payload);
     }
   }
 }

@@ -30,39 +30,33 @@ export class UsersComponent implements OnDestroy {
     this.destroyed.next(true);
   }
 
-  // ABRIR MODAL // CREAR USUARIO
   onCreateUser(): void {
     this.matDialog
-      // abrir modal
       .open(FormDialogComponent)
-      // cuando se cierra
       .afterClosed()
-      // hacer esto... guardar valor
       .subscribe({
         next: (v) => {
           if (v) {
             this.notifier.showSuccess('Se creo correctamente');
-
             this.userService.createUser({
               name: v.name,
               email: v.email,
               password: v.password,
               surname: v.surname,
+              role: v.role,
             });
           }
         }
       })
   }
 
-  // ELIMINAR USUARIO
   onDeleteUser(userToDelete: User): void {
     if (confirm(`¿Seguro desea eliminar a ${userToDelete.name}?`)) {
       this.userService.deleteUserById(userToDelete.id);
     }
     this.notifier.showError('Eliminado correctamente');
   }
-
-  // EDITAR USUARIO
+  
   onEditUser(userToEdit: User): void {
     console.log(userToEdit)
 

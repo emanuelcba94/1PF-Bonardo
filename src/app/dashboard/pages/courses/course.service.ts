@@ -10,42 +10,30 @@ import { environment } from 'src/environments/environments';
 })
 export class CourseService {
   private _courses$ = new BehaviorSubject<Courses[]>([]);
-  private courses$ = this._courses$.asObservable();
-
+  public courses$ = this._courses$.asObservable();
 
   constructor(
     private notifier: NotifierService, 
     private httpClient: HttpClient) { }
 
 
-  // CARGAR CURSOS
   loadCourses(): void {
-    // Con HTTP CLIENT:
     this.httpClient.get<Courses[]>(environment.baseApiUrl + '/courses').subscribe({
       next: (response) => {
         this._courses$.next(response);
       },
       error: () => {
-        // ERROR
         this.notifier.showErrorServer('Error al cargar los cursos');
       },
-      complete: () => {
-        // SE COMPLETO EL OBSERVABLE
-      },
+      complete: () => {},
     })
   }
 
-  
-  // OBTENER CURSOS
   getCourses(): Observable<Courses[]> {
     return this.courses$;
   }
 
-
-  // CURSO CREADO
   createCourses(payload: CreateCoursesData): void {
-
-    // Con HTTP CLIENT:
     this.httpClient.post<Courses>(environment.baseApiUrl + '/courses', {...payload})
     .pipe(
       mergeMap((courseCreate) => this.courses$.pipe(
@@ -60,19 +48,14 @@ export class CourseService {
     })
   }
 
-  // CURSO ACTUALIZADO
   updateCourseById(id: number, cursoActualizado: UpdateCoursesData): void {
-    // Con HTTP CLIENT:
     this.httpClient.put(environment.baseApiUrl + '/courses/' + id, cursoActualizado).subscribe({
       next: (cursoActualizado) => 
       this.loadCourses(),
     })
   }
 
-
-  // CURSO ELIMINADO
   deleteCourseById(id: number): void {
-    // Con HTTP CLIENT:
     this.httpClient.delete(environment.baseApiUrl + '/courses/' + id).pipe(
       mergeMap(
         (responseCourseDelete) => this.courses$.pipe(take(1), map((arrayA) => arrayA.filter((u) => u.id !== id))
@@ -81,9 +64,6 @@ export class CourseService {
     ).subscribe({
       next: ((arrayActual) => this._courses$.next(arrayActual)),
     })
-    
     this.courses$.pipe(take(1))
-
   }
-
 }

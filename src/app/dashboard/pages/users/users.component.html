@@ -1,10 +1,6 @@
 <div class="users-section border border-3 p-4">
-
-
     <div class="mb-3">
         <h1 appSizes class="text-center text-uppercase bg-dark text-white mx-auto py-3">Usuarios</h1>
-
-        <!-- BUTTON PARA ABIRR FORM -->
         <button (click)="onCreateUser()" mat-flat-button color="primary" type="button"><mat-icon>add</mat-icon>Crear usuario</button>
     </div>
     
@@ -13,14 +9,5 @@
     (deleteUser)="onDeleteUser($event)"
     (editUser)=" onEditUser($event)"
     ></app-users-table>
-
-    
 </div>
 
-<!-- SHOW DATOS -->
-<!-- <div class="border border-3 mx-3 p-3">
-    <h2>TUS DATOS:</h2>
-    <pre>Nombre: {{ userForm.value.name | json | uppercase }} </pre>
-    <pre>Apellido: {{ userForm.value.surname | json | uppercase }} </pre>
-    <pre>E-mail: {{ userForm.value.email | json | uppercase }} </pre>
-</div> -->

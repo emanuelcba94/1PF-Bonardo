@@ -18,11 +18,10 @@ export class CoursesFormComponent {
 
   editingCourses?: Courses;
 
-  
   dedication: Dedication[] = [
-    {value: 'Bajo-0', viewValue: 'Bajo'},
-    {value: 'Moderado-1', viewValue: 'Moderado'},
-    {value: 'Alto-2', viewValue: 'Alto'},
+    {value: 'Bajo', viewValue: 'Bajo'},
+    {value: 'Moderado', viewValue: 'Moderado'},
+    {value: 'Alto', viewValue: 'Alto'},
   ];
 
   nameControl = new FormControl<string | null>(null, [

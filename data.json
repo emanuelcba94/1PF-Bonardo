@@ -2,75 +2,127 @@
   "users": [
     {
       "name": "emanuel",
+      "email": "emanuel@fake.com",
+      "password": "123456",
       "surname": "bonardo",
-      "email": "emanuelb@fake.com",
-      "password": "12345",
-      "token": "htryd2eoR5aeR7rTgY59",
+      "role": "ADMINISTRADOR",
+      "token": "GZ9P3AaDmI1g9hNPRC24",
       "id": 1
     },
     {
-      "name": "carlos ",
-      "email": "carlos@gmail.com",
-      "password": "12345678",
-      "surname": "sanchez",
-      "token": "BIjmMEWlIaoyiCEq2gI3",
+      "name": "maria",
+      "surname": "lopez",
+      "email": "maria@fake.com",
+      "password": "123456",
+      "role": "USUARIO",
+      "token": "BOeoHDsKZzE9DWHsBV8s",
       "id": 2
     }
   ],
   "courses": [
     {
       "name": "Angular",
-      "description": "Aprenderás a crear y mantener aplicaciones web en una sola página.",
-      "price": "100",
-      "dedication": "Moderado-1",
+      "description": "Es un framework para aplicaciones web desarrollado en TypeScript, de código abierto, mantenido por Google, que se utiliza para crear y mantener aplicaciones web de una sola página.",
+      "price": "30000",
+      "dedication": "Alto",
       "id": 1
     },
     {
       "name": "JavaScript",
-      "description": "Desarrollar e integrar componentes del front-end para crear un sitio web increíble.",
-      "price": "120",
-      "dedication": "Alto-2",
+      "description": "Es un lenguaje de programación interpretado, dialecto del estándar ECMAScript. Se define como orientado a objetos, ​ basado en prototipos, imperativo, débilmente tipado y dinámico.",
+      "price": "20000",
+      "dedication": "Alto",
       "id": 2
     },
     {
       "name": "SQL",
-      "description": "Explotar información y generar indicadores, por medio de la extracción de datos.",
-      "price": "95",
-      "dedication": "Moderado-1",
+      "description": "Es un lenguaje específico de dominio, diseñado para administrar, y recuperar información de sistemas de gestión de bases de datos relacionales.​",
+      "price": "25000",
+      "dedication": "Moderado",
       "id": 3
     },
     {
       "name": "HTML",
-      "description": "Aprenderás el Lenguaje de Marcado de Hipertexto. ",
-      "price": "85",
-      "dedication": "Bajo-0",
+      "description": "El Lenguaje de Marcado de Hipertexto (HTML) es el código que se utiliza para estructurar y desplegar una página web y sus contenidos.",
+      "price": "10000",
+      "dedication": "Bajo",
       "id": 4
+    },
+    {
+      "name": "CSS",
+      "description": "CSS, en español «Hojas de estilo en cascada», es un lenguaje de diseño gráfico para definir y crear la presentación de un documento estructurado escrito en un lenguaje de marcado.​",
+      "price": "13000",
+      "dedication": "Bajo",
+      "id": 5
     }
   ],
   "student": [
     {
-      "name": "carla ",
-      "surname": "gonzalez",
-      "identity": "3.455.825",
-      "courses": "Angular-0",
-      "registration": "2023-07-17T03:00:00.000Z",
+      "name": "camila",
+      "surname": "suarez",
+      "email": "camila@fake.com",
       "id": 1
     },
     {
-      "name": "lucas",
-      "surname": "lopez",
-      "identity": "4.526.596",
-      "courses": "SQL-1",
-      "registration": "2023-08-03T03:00:00.000Z",
+      "name": "carla",
+      "surname": "conte",
+      "email": "carla@fake.com.ar",
       "id": 2
     },
     {
-      "name": "joaquin",
-      "surname": "valle",
-      "identity": "3.125.568",
-      "courses": "HTML-3",
-      "registration": "2023-08-01T03:00:00.000Z",
+      "name": "jose",
+      "surname": "diaz",
+      "email": "jose@fake.com.ar",
       "id": 3
+    },
+    {
+      "name": "gustavo",
+      "surname": "lavo",
+      "email": "gustavo@fake.com.ar",
+      "id": 4
+    },
+    {
+      "name": "jose",
+      "surname": "fake",
+      "email": "jose@fake.com",
+      "id": 5
+    }
+  ],
+  "apprentices": [
+    {
+      "name": "camila",
+      "surname": "suarez",
+      "email": "camila@fake.com",
+      "id": 1
+    },
+    {
+      "name": "carla",
+      "surname": "conte",
+      "email": "carla@fake.com.ar",
+      "id": 2
+    },
+    {
+      "name": "jose",
+      "surname": "diaz",
+      "email": "jose@fake.com.ar",
+      "id": 3
+    }
+  ],
+  "inscription": [
+    {
+      "id": 1,
+      "coursesId": 3,
+      "studentId": 2
+    },
+    {
+      "id": 2,
+      "coursesId": 2,
+      "studentId": 1
+    },
+    {
+      "id": 3,
+      "coursesId": 1,
+      "studentId": 3
     }
   ]
 }

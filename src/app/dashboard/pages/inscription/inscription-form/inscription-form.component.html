@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Inscripción</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="inscriptionForm" class="grid p-3">
+        <!-- INPUT STUDENT -->
+        <mat-form-field class="col-sm-6 col-lg-6 mb-3 px-3" appearance="outline">
+            <mat-label>Alumno</mat-label>
+            <mat-select formControlName="studentId">
+                <mat-option [value]="student.id" *ngFor="let student of  studentOptions$ | async">
+                    {{student.name + ' ' + student.surname}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="studentIdControl.hasError('required') ">
+                Este campo es requerido
+            </mat-error>
+        </mat-form-field>
+        <!-- INPUT COURSE -->
+        <mat-form-field class="col-sm-6 col-lg-6 mb-3 px-3" appearance="outline">
+            <mat-label>Curso</mat-label>
+            <mat-select formControlName="coursesId">
+                <mat-option [value]="courses.id" *ngFor="let courses of  coursesOptions$ | async">
+                    {{courses.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="coursesIdControl.hasError('required') ">
+                Este campo es requerido
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-actions>
+    <!-- BUTTON GUARDAR -->
+    <div class="col-12 text-center p-5">
+        <button mat-dialog-close mat-raised-button color="warn">Cancelar</button>
+        <button (click)="onSubmit()" mat-raised-button color="primary" type="submit">Guardar</button>
+    </div>
+</div>
+

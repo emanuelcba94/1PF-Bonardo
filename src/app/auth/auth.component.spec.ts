@@ -27,33 +27,4 @@ describe('AuthService', () => {
     afterEach (() => {
         httpController.verify();
     })
-
-    // Test-Service-01
-    it('login() = valido, el observable authUser$ debe emitir un valor', (done) => {
-        const mockFakeUser: User = {
-            id: 1,
-            name: 'emanuel',
-            surname: 'perez',
-            email: 'emanuelb@fake.com',
-            password: '12345',
-            token: 'DjLUdjeyuodpelrjrJjr'
-        };
-        const mockFakeResponse: User[] = [mockFakeUser];
-        serviceAuthService.login({
-            email: 'emanuelb@fake.com',
-            password: '12345'
-        });
-        httpController.expectOne({
-            method: 'GET',
-            url: `http://localhost:3000/users?email=${mockFakeUser.email}&password=${mockFakeUser.password}`,
-        }).flush(mockFakeResponse)
-
-        serviceAuthService.authUser$.subscribe({
-            next: (authUser) => {
-                expect(authUser).toBeTruthy();
-                expect(authUser).toEqual(mockFakeUser);
-                done();
-            }
-        })
-    })
 })

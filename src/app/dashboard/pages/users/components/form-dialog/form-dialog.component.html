@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>
-    {{ editingUser ? 
-        "Editar a " + editingUser.name + " " + editingUser.surname   
-        : 'Crear usuario'
+    {{ editingUser ?
+    "Editar a " + editingUser.name + " " + editingUser.surname
+    : 'Crear usuario'
     }}</h1>
 <div mat-dialog-content>
     <form [formGroup]="userForm" class="grid p-3">
@@ -49,6 +49,17 @@
                 El campo debe tener al menos {{ passwordControl.errors?.['minlength']?.requiredLength }} caracteres.
             </mat-error>
             <mat-icon matSuffix color="primary">sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+        <!-- INPUT ROL -->
+        <mat-form-field class="col-sm-6 col-lg-6 mb-3 px-3" appearance="outline">
+            <mat-label>ROL</mat-label>
+            <mat-select formControlName="role">
+                <mat-option value="ADMINISTRADOR">ADMINISTRADOR</mat-option>
+                <mat-option value="USUARIO">USUARIO</mat-option>
+            </mat-select>
+            <mat-error *ngIf="roleControl.hasError('required') ">
+                Este campo es requerido
+            </mat-error>
         </mat-form-field>
     </form>
 </div>

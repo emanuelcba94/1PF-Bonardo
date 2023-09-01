@@ -5,6 +5,8 @@ import { Observable, take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { NotifierService } from 'src/app/core/services/notifier.service';
 import { CoursesFormComponent } from './courses-form/courses-form.component';
+import { Store } from '@ngrx/store';
+import { selectIsAdmin } from 'src/app/store/auth/auth.selector';
 
 @Component({
   selector: 'app-courses',
@@ -15,19 +17,15 @@ export class CoursesComponent {
 
   public course: Observable<Courses[]>
 
-
   constructor(
     private courseService: CourseService,
     private matDialog: MatDialog,
-    private notifier: NotifierService
+    private notifier: NotifierService,
   ) {
-    // OBTENGO LOS DATOS EN LA TABLE
     this.courseService.loadCourses();
     this.course = this.courseService.getCourses();
   }
 
-
-  // ABRIR MODAL // CREAR CURSO
   onCreateCourse(): void {
     this.matDialog
       .open(CoursesFormComponent)
@@ -36,7 +34,6 @@ export class CoursesComponent {
         next: (v) => {
           if (v) {
             this.notifier.showSuccess('Se creo correctamente');
-            // console.log(v)
             this.courseService.createCourses({
               name: v.name,
               description: v.description,
@@ -48,7 +45,6 @@ export class CoursesComponent {
       })
   }
 
-  // EDITAR CURSO
   onEditCourse(cuorseToEdit: Courses): void {
     this.matDialog
       .open(CoursesFormComponent, {
@@ -65,7 +61,6 @@ export class CoursesComponent {
       })
   };
 
-  // ELIMINAR CURSO
   onDeleteCourse(courseToDelete: Courses): void {
     if (confirm(`¿Seguro desea eliminar el curso de ${courseToDelete.name}?`)) {
       this.courseService.deleteCourseById(courseToDelete.id);

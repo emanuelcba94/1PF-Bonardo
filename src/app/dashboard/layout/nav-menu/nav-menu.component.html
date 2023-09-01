@@ -5,25 +5,27 @@
         </button>
     </div>
     <div class="d-flex align-items-center p-2">
-        <mat-icon class="pe-4">home</mat-icon> 
+        <mat-icon color="primary" class="pe-4">home</mat-icon> 
         <a routerLink="home" mat-list-item>Inicio</a>
     </div>
-    <div class="d-flex align-items-center p-2">
-        <mat-icon class="pe-4">person</mat-icon>
+    <div *ngIf="selectIsAdmin$ | async" class="d-flex align-items-center p-2">
+        <mat-icon color="primary" class="pe-4">person</mat-icon>
         <a routerLink="users" mat-list-item>Usuarios</a>
     </div>
     <div class="d-flex align-items-center p-2">
-        <mat-icon class="pe-4">group</mat-icon>
+        <mat-icon color="primary" class="pe-4">group</mat-icon>
         <a routerLink="student" mat-list-item>Alumnos</a>
     </div>
     <div class="d-flex align-items-center p-2">
-        <mat-icon class="pe-4">view_list</mat-icon>
+        <mat-icon color="primary" class="pe-4">view_list</mat-icon>
         <a routerLink="courses" mat-list-item>Cursos</a>
     </div>
+    <div class="d-flex align-items-center p-2">
+        <mat-icon color="primary" class="pe-4">how_to_reg</mat-icon>
+        <a routerLink="inscription" mat-list-item>Inscripción</a>
+    </div>
     <div class="d-flex align-items-center p-2 pt-5">
-        <mat-icon class="pe-4">logout</mat-icon>
+        <mat-icon color="primary" class="pe-4">logout</mat-icon>
         <a (click)="logout()" mat-list-item>Cerrar sesión</a>
     </div>
 </mat-nav-list>
-
-<!-- routerLink="/login" -->
